@@ -174,7 +174,7 @@ MissionUtils.Random.pickNumberInRange(0, 9);
 
 ## ✏️ 과제 진행 요구 사항
 
-- 미션은 [javascript-racingcar-6](https://github.com/woowacourse-precourse/javascript-racingcar-6) 저장소를 Fork & Clone해 시작한다.
+- 미션은 [javascript-racingcar-6](https://github.com/gdsc-skhu-pair-mission/javascript-racingcar-6) 저장소를 Fork & Clone해 시작한다.
 - **기능을 구현하기 전 `docs/README.md`에 구현할 기능 목록을 정리**해 추가한다.
 - **Git의 커밋 단위는 앞 단계에서 `docs/README.md`에 정리한 기능 목록 단위**로 추가한다.
   - [커밋 메시지 컨벤션](https://gist.github.com/stephenparish/9941e89d80e2bc58a153) 가이드를 참고해 커밋 메시지를 작성한다.
