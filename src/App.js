@@ -18,7 +18,7 @@ function getAvailableCars(CarArray) {
       throw new Error('[ERROR]공백을 입력하셨습니다.');
     }
 
-    if (car.length() > 5) {
+    if (car.length > 5) {
       throw new Error('[ERROR]이름이 5글자를 초과하셨습니다.');
     }
   });
