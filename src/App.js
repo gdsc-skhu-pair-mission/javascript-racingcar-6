@@ -45,6 +45,16 @@ function getAvailableAttempts(Round) {
     throw new Error('[ERROR] 1 이하의 수를 입력하시면 안됩니다.');
   }
 }
+function getRandomNumber() {
+  const RandomNumber = Random.pickNumberInRange(0, 9);
+  return RandomNumber;
+}
+function getCarMoveForword() {
+  const num = getRandomNumber();
+  const moveNumber = 4;
+  if (num >= moveNumber) {
+  }
+}
 
 class App {
   // eslint-disable-next-line class-methods-use-this
