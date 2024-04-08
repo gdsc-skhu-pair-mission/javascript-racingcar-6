@@ -10,6 +10,9 @@ async function getUserCarName() {
 }
 
 function getAvailableCars(CarArray) {
+  if (CarArray.length <= 2) {
+    throw new Error("[ERROR]자동차가 한 대이하로 입력하셨습니다. ");
+  }
   CarArray.array.forEach((car) => {
     if (car.trim() === "") {
       throw new Error("[ERROR]공백을 입력하셨습니다.");
@@ -18,13 +21,8 @@ function getAvailableCars(CarArray) {
     if (car.length() > 5) {
       throw new Error("[ERROR]이름이 5글자를 초과하셨습니다.");
     }
-
-    if (CarArray.length <= 2) {
-      throw new Error("[ERROR]자동차가 한 대이하로 입력하셨습니다. ");
-    }
-
-    return CarArray;
   });
+  return CarArray;
 }
 
 class App {
