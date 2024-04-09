@@ -1,66 +1,49 @@
-import { Random, Console } from '@woowacourse/mission-utils';
-
-async function getUserCarName() {
-  const getCarName = await Console.readLineAsync(
-    '경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)\n',
-  );
-  const setCarArray = getCarName.split(',');
-  // eslint-disable-next-line no-use-before-define
-  const carList = getAvailableCars(setCarArray);
-  return carList;
-}
-
-function getAvailableCars(CarArray) {
-  CarArray.forEach((car) => {
-    if (car.trim() === '') {
-      throw new Error('[ERROR]공백을 입력하셨습니다.');
-    }
-    if (car.length > 5) {
-      throw new Error('[ERROR]이름이 5글자를 초과하셨습니다.');
-    }
-  });
-  if (CarArray.length < 2) {
-    throw new Error('[ERROR]자동차가 한 대이하로 입력하셨습니다. ');
-  }
-  console.log(CarArray);
-  return CarArray;
-}
-
-async function askForAttempts() {
-  const attemptRound =
-    await Console.readLineAsync('시도할 횟수는 몇 회인가요?\n');
-  // eslint-disable-next-line no-use-before-define
-  const roundNumber = getAvailableAttempts(attemptRound);
-  return roundNumber;
-}
-
-function getAvailableAttempts(Round) {
-  if (Round.trim() === '') {
-    throw new Error('[ERROR] 공백을 입력하시면 안됩니다.');
-  }
-  if (Number.isNaN(+Round)) {
-    throw new Error('[ERROR] 숫자가 아닌 값을 입력하시면 안됩니다.');
-  }
-  if (+Round < 1) {
-    throw new Error('[ERROR] 1 이하의 수를 입력하시면 안됩니다.');
-  }
-}
-function getRandomNumber() {
-  const RandomNumber = Random.pickNumberInRange(0, 9);
-  return RandomNumber;
-}
-function getCarMoveForword() {
-  const num = getRandomNumber();
-  const moveNumber = 4;
-  if (num >= moveNumber) {
-  }
-}
+import { Console } from '@woowacourse/mission-utils';
+// eslint-disable-next-line import/extensions
+import Car from './Car.js';
 
 class App {
-  // eslint-disable-next-line class-methods-use-this
+  constructor() {
+    this.cars = [];
+  }
+
   async play() {
-    await getUserCarName();
-    // await askForAttempts();
+    const getUserCarName = await Console.readLineAsync(
+      '경주 할 자동차 이름(이름은 쉼표(,) 기준으로 구분)\n',
+    );
+    const carNames = getUserCarName.split(',');
+    carNames.forEach((name) => {
+      const car = new Car(name);
+      this.cars.push(car);
+    });
+    const askForAttempts = Number(
+      await Console.readLineAsync('시도할 횟수는 몇 회인가요?\n'),
+    );
+    Console.print('\n실행결과');
+    for (let i = 0; i < askForAttempts; i++) {
+      this.cars.forEach((car) => car.move());
+      this.showRacingStatus();
+    }
+    this.gameWinner();
+  }
+
+  showRacingStatus() {
+    this.cars.forEach((car) => {
+      Console.print(`${car.getName()} : ${'-'.repeat(car.getDistance())}`);
+    });
+    Console.print('');
+  }
+
+  gameWinner() {
+    const getWinnerDistance = Math.max(
+      ...this.cars.map((car) => car.getDistance()),
+    );
+
+    const getWinner = this.cars
+      .filter((car) => car.getDistance() === getWinnerDistance)
+      .map((car) => car.getName());
+    // eslint-disable-next-line prefer-template
+    Console.print('최종 우승자 : ' + getWinner.join(', '));
   }
 }
 
