@@ -1,4 +1,6 @@
 import { Random, Console } from "@woowacourse/mission-utils";
+const CAR_NAME_LIMIT = 5;
+const NUMBER_LIMIT = 0;
 
 function carNameException(carNameList, carName) {
   if (!Number.isNaN(Number(carNameList))) {
@@ -9,7 +11,7 @@ function carNameException(carNameList, carName) {
   }
 
   carName.forEach((name) => {
-    if (name.length > 5) {
+    if (name.length > CAR_NAME_LIMIT) {
       throw new Error("[ERROR]");
       // throw new Error("[Error] 5자 이하인 이름으로 입력해주세요.");
     }
@@ -17,28 +19,28 @@ function carNameException(carNameList, carName) {
 }
 
 async function inputCarName() {
-  let carNameList = await Console.readLineAsync(
+  const carNameList = await Console.readLineAsync(
     "경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)\n"
   );
-  let carName = carNameList.split(",");
+  const carName = carNameList.split(",");
 
   carNameException(carNameList, carName);
   return carName;
 }
 
 async function inputTryCount() {
-  let tryCount = await Console.readLineAsync("시도할 횟수는 몇 회인가요?\n");
+  const tryCount = await Console.readLineAsync("시도할 횟수는 몇 회인가요?\n");
   if (Number.isNaN(Number(tryCount))) {
     throw new Error("[ERROR] 숫자가 아닙니다.");
   }
-  if (tryCount < 0) {
+  if (Number(tryCount) < NUMBER_LIMIT) {
     throw new Error("[ERROR] 0보다 큰 수를 입력해야 합니다.");
   }
 
-  return tryCount;
+  return Number(tryCount);
 }
 
-function isGo(nowState) {
+function determineCarPathByRandom(nowState) {
   let randomNum = Random.pickNumberInRange(0, 9);
   let nextState = nowState;
   if (randomNum >= 4) {
@@ -69,7 +71,7 @@ function showCarGo(carName, tryCount) {
 
   for (let i = 0; i < tryCount; i++) {
     carName.forEach((name, index) => {
-      carState[index] = isGo(carState[index]);
+      carState[index] = determineCarPathByRandom(carState[index]);
       // 이후 수정 필요 (에러 원인에 대한 해결책 아직 발견하지 못함)
       // eslint-disable-next-line prefer-template
       Console.print(name + " : " + carState[index]);
