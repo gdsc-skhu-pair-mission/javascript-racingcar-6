@@ -1,8 +1,8 @@
-export default function getAvailableAttempts(Round) {
-  if (Round.trim() === '') {
+export default function getAvailableAttempts(round) {
+  if (round.trim() === '') {
     throw new Error('[ERROR] 공백을 입력하시면 안됩니다.');
   }
-  const roundNumber = +Round;
+  const roundNumber = Number(round);
   if (Number.isNaN(roundNumber)) {
     throw new Error('[ERROR] 숫자가 아닌 값을 입력하시면 안됩니다.');
   }
