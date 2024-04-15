@@ -16,16 +16,31 @@ class App {
       const car = new Car(name);
       this.cars.push(car);
     });
-    const askForAttempts = Number(
-      await Console.readLineAsync('시도할 횟수는 몇 회인가요?\n'),
-    );
+
+    this.askForAttempts =
+      await Console.readLineAsync('시도할 횟수는 몇 회인가요?\n');
+    const AVAILABLE_ATTEMPTS = this.getAvailableAttempts();
 
     Console.print('\n실행결과');
-    for (let i = 0; i < askForAttempts; i++) {
+    for (let i = 0; i < AVAILABLE_ATTEMPTS; i++) {
       this.cars.forEach((car) => car.move());
       this.showRacingStatus();
     }
     this.generateGameWinner();
+  }
+
+  getAvailableAttempts() {
+    if (this.askForAttempts.trim() === '') {
+      throw new Error('[ERROR] 공백을 입력하실 수 없습니다.');
+    }
+    const ATTEMPTS = Number(this.askForAttempts);
+    if (Number.isNaN(ATTEMPTS)) {
+      throw new Error('[ERROR] 숫자가 아닌 값을 입력하실 수 없습니다. ');
+    }
+    if (ATTEMPTS < 0) {
+      throw new Error('[ERROR] 숫자가 0보다 작으면 안됩니다.');
+    }
+    return ATTEMPTS;
   }
 
   showRacingStatus() {

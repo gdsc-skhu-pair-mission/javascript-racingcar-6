@@ -2,8 +2,11 @@ import { Random } from '@woowacourse/mission-utils';
 
 class Car {
   constructor(name) {
-    this.minNameLength = 5;
-    if (name.length > this.minNameLength) {
+    const MIN_NAME_LENGTH = 5;
+    if (typeof name !== 'string') {
+      throw new Error('[ERROR] 자동차 이름은 문자열이어야 합니다.');
+    }
+    if (name.length > MIN_NAME_LENGTH) {
       throw new Error('[ERROR] 자동차 이름은 5자 이하만 가능합니다.');
     }
     if (name.trim() === '') {
@@ -14,8 +17,8 @@ class Car {
   }
 
   move() {
-    this.MoveNumber = 4;
-    if (Random.pickNumberInRange(0, 9) >= this.MoveNumber) {
+    const MOVE_NYMBER = 4;
+    if (Random.pickNumberInRange(0, 9) >= MOVE_NYMBER) {
       this.distance += 1;
     }
   }
