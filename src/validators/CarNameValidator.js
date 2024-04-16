@@ -1,14 +1,15 @@
-import { ERROR_MESSAGES } from '../constants/messages';
+import { ERROR_MESSAGES } from '../constants/messages.js';
+import { GAME_SETTINGS, SYMBOLS } from '../constants/symbols.js';
 
 export default function getAvailableCars(carArray) {
   carArray.forEach((car) => {
-    if (car.trim() === '') {
+    if (car.trim() === SYMBOLS.EMPTY) {
       throw new Error(ERROR_MESSAGES.EMPTY_INPUT_ERROR);
     }
-    if (car.includes(' ')) {
+    if (car.includes(SYMBOLS.SPACE)) {
       throw new Error(ERROR_MESSAGES.SPACE_IN_CAR_NAME_ERROR);
     }
-    if (car.length > 5) {
+    if (car.length > GAME_SETTINGS.MAX_NAME_LENGTH) {
       throw new Error(ERROR_MESSAGES.CAR_NAME_LENGTH_ERROR);
     }
   });
@@ -18,7 +19,7 @@ export default function getAvailableCars(carArray) {
     throw new Error(ERROR_MESSAGES.DUPLICATE_CAR_NAME_ERROR);
   }
 
-  if (carArray.length < 2) {
+  if (carArray.length < GAME_SETTINGS.MIN_CARS_REQUIRED) {
     throw new Error(ERROR_MESSAGES.TOO_FEW_CARS_ERROR);
   }
   return carArray;
