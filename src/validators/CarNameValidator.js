@@ -1,17 +1,25 @@
-export default function getAvailableCars(CarArray) {
-  CarArray.forEach((car) => {
+import { ERROR_MESSAGES } from '../constants/messages';
+
+export default function getAvailableCars(carArray) {
+  carArray.forEach((car) => {
     if (car.trim() === '') {
-      throw new Error('[ERROR] 공백만 입력하시면 안됩니다.');
+      throw new Error(ERROR_MESSAGES.EMPTY_INPUT_ERROR);
     }
     if (car.includes(' ')) {
-      throw new Error('[ERROR] 이름 사이에 공백을 입력하시면 안됩니다.');
+      throw new Error(ERROR_MESSAGES.SPACE_IN_CAR_NAME_ERROR);
     }
     if (car.length > 5) {
-      throw new Error('[ERROR] 이름이 5글자를 초과하시면 안됩니다.');
+      throw new Error(ERROR_MESSAGES.CAR_NAME_LENGTH_ERROR);
     }
   });
-  if (CarArray.length < 2) {
-    throw new Error('[ERROR] 자동차를 1대 이하로 입력하시면 안됩니다.');
+
+  const checkedDuplicateCars = new Set(carArray);
+  if (checkedDuplicateCars.size !== carArray.length) {
+    throw new Error(ERROR_MESSAGES.DUPLICATE_CAR_NAME_ERROR);
   }
-  return CarArray;
+
+  if (carArray.length < 2) {
+    throw new Error(ERROR_MESSAGES.TOO_FEW_CARS_ERROR);
+  }
+  return carArray;
 }
