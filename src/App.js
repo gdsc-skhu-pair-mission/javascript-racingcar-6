@@ -18,7 +18,7 @@ function carNameException(carNameList, carName) {
   });
 }
 
-async function inputCarName() {
+async function getCarNameFromUserInput() {
   const carNameList = await Console.readLineAsync(
     "경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)\n"
   );
@@ -85,7 +85,7 @@ class App {
   // 이후 수정 필요 (에러 원인에 대한 해결책 아직 발견하지 못함)
   // eslint-disable-next-line class-methods-use-this
   async play() {
-    let carName = await inputCarName();
+    let carName = await getCarNameFromUserInput();
     let tryCount = await inputTryCount();
     showCarGo(carName, tryCount);
   }
